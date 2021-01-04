@@ -309,3 +309,41 @@ add_filter('body_class', function ($classes) {
 	}
 	return $classes;
 }, 1000);
+
+//Сортировка дереом таксономию https://wp-kama.ru/question/nuzhno-poluchit-spisok-kategorij-taksonomii-soblyudaya-ierarhiyu
+function sort_terms_hierarchicaly( & $cats, & $into, $parentId = 0 ){
+	foreach( $cats as $i => $cat ){
+		if( $cat->parent == $parentId ){
+			$into[ $cat->term_id ] = $cat;
+			unset( $cats[$i] );
+		}
+	}
+
+	foreach( $into as $top_cat ){
+		$top_cat->children = array();
+		sort_terms_hierarchicaly( $cats, $top_cat->children, $top_cat->term_id );
+	}
+}
+
+add_filter('style_loader_tag', 'myplugin_remove_type_attr', 10, 2);
+add_filter('script_loader_tag', 'myplugin_remove_type_attr', 10, 2);
+
+function myplugin_remove_type_attr($tag, $handle) {
+    return preg_replace( "/type=['\"]text\/(javascript|css)['\"]/", '', $tag );
+}
+
+/*
+//исключение страниц из результатов поиска start
+function wph_exclude_pages($query) {
+	if ($query->is_search) {
+		 $query->set('post_type', 'post');
+		 $query->set('post_type', 'page');
+		 $query->set('post_type', 'materials');
+		 $query->set('post_type', 'faq');
+		 $query->set('post_type', 'reviews');
+		 $query->set('post_type', 'reviews');
+	}
+	return $query;
+}
+add_filter('pre_get_posts','wph_exclude_pages');
+//исключение страниц из результатов поиска end*/
