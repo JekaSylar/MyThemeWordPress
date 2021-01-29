@@ -1,5 +1,14 @@
 <?php
 
+require_once  get_template_directory() . '/inc/admin-customizer.php';
+
+require_once  get_template_directory() . '/inc/post-customizer.php';
+
+require_once  get_template_directory() . '/inc/class-wp-bootstrap-navwalker.php';
+
+require_once  get_template_directory() . '/inc/languages.php';
+
+require_once get_template_directory() . '/inc/kama-thumbnail/kama_thumbnail.php';
 
 
 
@@ -78,13 +87,6 @@ add_action( 'wp_enqueue_scripts', 'mytheme_scripts' );
 
 
 
-require get_template_directory() . '/inc/admin-customizer.php';
-
-require get_template_directory() . '/inc/post-customizer.php';
-
-require get_template_directory() . '/inc/class-wp-bootstrap-navwalker.php';
-
-require get_template_directory() . '/inc/languages.php';
 
 
 /**
